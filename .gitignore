@@ -1,0 +1,8 @@
+.DS_Store
+.bundle
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+.*.sw[a-z]
+*.un~
