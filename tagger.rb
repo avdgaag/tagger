@@ -1,10 +1,8 @@
-require 'rubygems'
-require 'bundler'
-Bundler.setup
-# require 'sinatra'
-# require 'addressable/uri'
-# require 'rack-flash'
-# require 'bitly'
+require 'bundler/setup'
+require 'sinatra'
+require 'addressable/uri'
+require 'rack-flash'
+require 'bitly'
 
 helpers do
   include Rack::Utils
@@ -41,11 +39,138 @@ end
 
 __END__
 @@index
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>Link tagger</title>
+    <style type="text/css" media="screen">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+        html {
+            border: 10px solid #eee;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font: 12px/20px Arial, sans-serif;
+            color: #555;
+            width: 500px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        p, form, h1, #flash {
+            margin: 20px 0;
+        }
+        #flash {
+            border: 1px solid;
+            padding: 9px;
+            border-radius: 3px;
+            -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.33);
+            text-shadow: -1px -1px 1px rgba(255,255,255,.33);
+            margin: 20px -10px;
+            display: none;
+        }
+        #flash.warning {
+            background-color: #fad4d4;
+            color: #900;
+            border-color: #900;
+        }
+        #flash.notice {
+            background-color: #d4fad4;
+            color: #090;
+            border-color: #090;
+        }
+        h1 {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #dedede;
+            font-size: 20px;
+            margin-bottom: -10px;
+            line-height: 30px;
+        }
+        fieldset {
+            background: #fff;
+            border: 1px solid #eee;
+            position: relative;
+            padding: 30px 10px 10px 10px;
+            margin: 10px 0;
+            border-radius: 3px;
+        }
+        form fieldset:first-child legend {
+            display: none;
+        }
+        form fieldset:first-child, form fieldset:last-child {
+            padding: 9px;
+        }
+        legend {
+            position: absolute;
+            font-weight: bold;
+            top: 10px;
+        }
+        ol {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        li {
+            clear: left;
+            display: block;
+            margin: 10px 0;
+        }
+        li label {
+            float: left;
+            width: 100px;
+            margin-right: 20px;
+            padding: 2px 0;
+        }
+        li input {
+            font-size: 16px;
+            padding: 2px;
+            width: 345px;
+        }
+        legend select {
+            margin-left: 25px;
+        }
+        form {
+            background: #f9f9f9;
+            margin: 20px -10px;
+            padding: 0 10px;
+            border: 1px solid #eee;
+            border-radius: 3px;
+        }
+        a {
+            color: #000;
+            text-decoration: underline;
+            -webkit-transition: all .25s linear;
+        }
+        a:visited {
+            color: #555;
+        }
+        a:hover, a:focus {
+            color: #009;
+        }
+        a:active {
+            position: relative;
+            top: 1px;
+            left: 1px;
+        }
+        abbr {
+            font-size: 85%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: help;
+        }
+    </style>
   </head>
   <body>
     <% if flash.has?(:warning) %>
@@ -55,14 +180,14 @@ __END__
       <div id="flash" class="notice"><%= flash[:notice] %></div>
     <% end %>
     <h1>tag-a-link</h1>
-    <p>Enter a URL below and tag it for tracking in Google Analytics. Choose a template or enter custom values.</p>
+    <p>Enter a <abbr title="Uniform Resource Locator">URL</abbr> below and tag it for tracking in <a href="http://www.google.com/analytics/" rel="external">Google Analytics</a> — either by choosing a template or entering custom values.</p>
     <form action="/tag" method="post">
       <fieldset>
         <legend>URL</legend>
         <ol>
           <li>
             <label for="form_url">URL:</label>
-            <input id="form_url" type="text" name="url" value="">
+            <input id="form_url" type="text" name="url" value="" placeholder="http://example.com">
           </li>
         </ol>
       </fieldset>
@@ -139,5 +264,41 @@ __END__
         <div><input type="submit" value="Tag link"></div>
       </fieldset>
     </form>
+    <script>
+        var fieldsets = Array.prototype.slice.call(document.getElementsByTagName('fieldset')),
+            first     = fieldsets.shift(),
+            last      = fieldsets.pop(),
+            fragment  = document.createDocumentFragment(),
+            fieldset  = document.createElement('fieldset'),
+            legend    = document.createElement('legend'),
+            select    = document.createElement('select'),
+            i         = fieldsets.length,
+            dict      = {};
+        while(i--) {
+            var f      = fieldsets[i],
+                option = document.createElement('option'),
+                leg    = f.getElementsByTagName('legend')[0],
+                label  = leg.getElementsByTagName('label')[0].lastChild.nodeValue.replace(/^ /, ''),
+                list   = f.getElementsByTagName('ol')[0];
+            dict[label] = list;
+            option.appendChild(document.createTextNode(label));
+            option.setAttribute('value', label);
+            list.style.display = 'none';
+            select.appendChild(option);
+            fieldset.appendChild(list);
+            f.parentNode.removeChild(f);
+        }
+        list.style.display = 'block';
+        select.value = label;
+        select.addEventListener('change', function(e) {
+            for(l in dict) if(dict.hasOwnProperty(l)) dict[l].style.display = 'none';
+            dict[this.value].style.display = 'block';
+        });
+        legend.appendChild(document.createTextNode('Pick a template: '))
+        legend.appendChild(select);
+        fieldset.insertBefore(legend, fieldset.firstChild);
+        fragment.appendChild(fieldset);
+        last.parentNode.insertBefore(fragment, last);
+    </script>
   </body>
 </html>
