@@ -103,11 +103,10 @@ __END__
         }
         h1 {
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid #dedede;
-            font-size: 20px;
-            margin-bottom: -10px;
-            line-height: 30px;
+            font-size: 30px;
+            margin-bottom: -20px;
+            line-height: 40px;
+            text-shadow: 1px 1px 1px #fff, 2px 2px 2px #ddd;
         }
         fieldset {
             background: #fff;
