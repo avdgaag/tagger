@@ -44,7 +44,7 @@ __END__
   <head>
     <meta charset="utf-8">
     <title>Link tagger</title>
-    <style type="text/css" media="screen">
+    <style>
         * {
             margin: 0;
             padding: 0;
