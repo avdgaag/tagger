@@ -142,6 +142,7 @@ __END__
             width: 100px;
             margin-right: 20px;
             padding: 2px 0;
+            cursor: pointer;
         }
         li input {
             font-size: 16px;
