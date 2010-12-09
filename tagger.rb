@@ -90,7 +90,6 @@ __END__
             -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.33);
             text-shadow: -1px -1px 1px rgba(255,255,255,.33);
             margin: 20px -10px;
-            display: none;
         }
         #flash.warning {
             background-color: #fad4d4;
