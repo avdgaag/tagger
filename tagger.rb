@@ -61,12 +61,24 @@ __END__
             margin: 0;
             padding: 0;
         }
+        @-webkit-keyframes pop {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
         body {
             font: 12px/20px Arial, sans-serif;
             color: #555;
             width: 500px;
             margin: 0 auto;
             text-align: left;
+            -webkit-animation-name: pop;
+            -webkit-animation-duration: .5s;
+            -webkit-animation-iteration-count: 1;
+            -webkit-animation-timing-function: ease-in;
         }
         p, form, h1, #flash {
             margin: 20px 0;
