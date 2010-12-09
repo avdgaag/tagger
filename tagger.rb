@@ -88,6 +88,7 @@ __END__
             padding: 9px;
             border-radius: 3px;
             -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.33);
+            -moz-box-shadow: 1px 1px 1px rgba(0,0,0,.33);
             text-shadow: -1px -1px 1px rgba(255,255,255,.33);
             margin: 20px -10px;
         }
