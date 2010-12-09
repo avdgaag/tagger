@@ -179,14 +179,14 @@ __END__
     <% if flash.has?(:notice) %>
       <div id="flash" class="notice"><%= flash[:notice] %></div>
     <% end %>
-    <h1>tag-a-link</h1>
-    <p>Enter a <abbr title="Uniform Resource Locator">URL</abbr> below and tag it for tracking in <a href="http://www.google.com/analytics/" rel="external">Google Analytics</a> — either by choosing a template or entering custom values.</p>
+    <h1>tag–a–link</h1>
+    <p>Enter a <abbr title="Uniform Resource Locator">URL</abbr> below and tag it for tracking in <a href="http://www.google.com/analytics/" rel="external">Google Analytics</a> — either by choosing a template or entering custom values. Press “Tag this link” and we’ll give you a <strong>tagged</strong> <em>and</em> a <strong>shortened</strong> <abbr>URL</abbr>.</p>
     <form action="/tag" method="post">
       <fieldset>
         <legend>URL</legend>
         <ol>
           <li>
-            <label for="form_url">URL:</label>
+            <label for="form_url"><abbr>URL</abbr> to tag:</label>
             <input id="form_url" type="text" name="url" value="" placeholder="http://example.com">
           </li>
         </ol>
@@ -212,7 +212,7 @@ __END__
         <legend><label><input type="radio" name="type" value="social_media"> Social media</label></legend>
         <ol>
           <li>
-            <label for="form_social_media_utm_source">Medium:</label>
+            <label for="form_social_media_utm_source">Referrer:</label>
             <input type="hidden" name="social_media_utm_medium" value="social_media">
             <select name="social_media_utm_source" id="form_social_media_utm_source">
               <option selected value="twitter">Twitter</option>
@@ -225,7 +225,7 @@ __END__
             </select>
           </li>
           <li>
-            <label for="form_subject">Subject:</label>
+            <label for="form_subject">Campaign title:</label>
             <input type="text" id="form_social_media_subject" name="social_media_utm_campaign" value="" placeholder="Campaign identifier">
           </li>
         </ol>
@@ -244,7 +244,7 @@ __END__
             </select>
           </li>
           <li>
-            <label for="form_offline_title">Campaign name:</label>
+            <label for="form_offline_title">Campaign title:</label>
             <input type="text" id="form_offline_title" name="offline_utm_campaign" value="" placeholder="Campaign identifier">
           </li>
         </ol>
@@ -261,7 +261,7 @@ __END__
         </ol>
       </fieldset>
       <fieldset class="controls">
-        <div><input type="submit" value="Tag link"></div>
+        <div><input type="submit" value="Tag this link &rsaquo;"></div>
       </fieldset>
     </form>
     <script>
