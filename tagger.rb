@@ -156,8 +156,37 @@ __END__
             background: #f9f9f9;
             margin: 20px -10px;
             padding: 0 10px;
-            border: 1px solid #eee;
-            border-radius: 3px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 0 3px rgba(0,0,0,.15);
+            -moz-box-shadow: 0 0 3px rgba(0,0,0,.15);
+            position: relative;
+        }
+        form:before {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            width: 70%;
+            height: 55%;
+            left: 25px;
+            bottom: 15px;
+            -webkit-transform: skew(-15deg) rotate(-5deg);
+            -webkit-box-shadow: -5px 6px 10px rgba(0, 0, 0, 0.1);
+            -moz-transform: skew(-15deg) rotate(-5deg);
+            -moz-box-shadow: -5px 6px 10px rgba(0, 0, 0, 0.1);
+        }
+        form:after {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            width: 70%;
+            height: 55%;
+            right: 25px;
+            bottom: 15px;
+            -webkit-transform: skew(15deg) rotate(5deg);
+            -webkit-box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.1);
+            -moz-transform: skew(15deg) rotate(5deg);
+            -moz-box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.1);
         }
         a {
             color: #000;
