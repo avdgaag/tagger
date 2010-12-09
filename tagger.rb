@@ -170,6 +170,48 @@ __END__
             letter-spacing: 1px;
             cursor: help;
         }
+        fieldset.controls div {
+            display: inline-block;
+            vertical-align: top;
+        }
+        div.spinner {
+          position: relative;
+          width: 24px;
+          margin-left: 12px;
+          height: 24px;
+          display: inline-block;
+        }
+
+        div.spinner div {
+          width: 12%;
+          height: 26%;
+          background: #000;
+          position: absolute;
+          left: 44.5%;
+          top: 37%;
+          opacity: 0;
+          -webkit-animation: fade 1s linear infinite;
+          -webkit-border-radius: 50px;
+          -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.2);
+        }
+
+        div.spinner div.bar1 {-webkit-transform:rotate(0deg) translate(0, -142%); -webkit-animation-delay: 0s;}
+        div.spinner div.bar2 {-webkit-transform:rotate(30deg) translate(0, -142%); -webkit-animation-delay: -0.9167s;}
+        div.spinner div.bar3 {-webkit-transform:rotate(60deg) translate(0, -142%); -webkit-animation-delay: -0.833s;}
+        div.spinner div.bar4 {-webkit-transform:rotate(90deg) translate(0, -142%); -webkit-animation-delay: -0.75s;}
+        div.spinner div.bar5 {-webkit-transform:rotate(120deg) translate(0, -142%); -webkit-animation-delay: -0.667s;}
+        div.spinner div.bar6 {-webkit-transform:rotate(150deg) translate(0, -142%); -webkit-animation-delay: -0.5833s;}
+        div.spinner div.bar7 {-webkit-transform:rotate(180deg) translate(0, -142%); -webkit-animation-delay: -0.5s;}
+        div.spinner div.bar8 {-webkit-transform:rotate(210deg) translate(0, -142%); -webkit-animation-delay: -0.41667s;}
+        div.spinner div.bar9 {-webkit-transform:rotate(240deg) translate(0, -142%); -webkit-animation-delay: -0.333s;}
+        div.spinner div.bar10 {-webkit-transform:rotate(270deg) translate(0, -142%); -webkit-animation-delay: -0.25s;}
+        div.spinner div.bar11 {-webkit-transform:rotate(300deg) translate(0, -142%); -webkit-animation-delay: -0.1667s;}
+        div.spinner div.bar12 {-webkit-transform:rotate(330deg) translate(0, -142%); -webkit-animation-delay: -0.0833s;}
+
+         @-webkit-keyframes fade {
+          from {opacity: 1;}
+          to {opacity: 0.25;}
+        }
     </style>
   </head>
   <body>
@@ -299,6 +341,17 @@ __END__
         fieldset.insertBefore(legend, fieldset.firstChild);
         fragment.appendChild(fieldset);
         last.parentNode.insertBefore(fragment, last);
+        document.forms[0].addEventListener('submit', function() {
+          var spinner = document.createElement('div');
+          spinner.setAttribute('class', 'spinner');
+          for(var i = 1; i <= 12; i++) {
+            var d = document.createElement('div');
+            d.setAttribute('class', 'bar' + i);
+            spinner.appendChild(d);
+          }
+          last.getElementsByTagName('input')[0].disabled = true;
+          last.appendChild(spinner);
+        });
     </script>
   </body>
 </html>
