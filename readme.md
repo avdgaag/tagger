@@ -1,16 +1,18 @@
 # Tagger
 
-A very simple Sinatra application that lets you tag URLs with Google Analytics campaign information. It is not unlike Google's one tool, but this one comes with some commonly used tagging templates.
+A very simple Sinatra application that lets you tag URLs with Google Analytics campaign information. It is not unlike Google's own tool, but this one comes with some commonly used tagging templates.
 
 ## Installation
 
-As a sinatra application you will need a working installation of Ruby and Rubygems. First make sure you have all the required gems installed, using Bundler:
+As a sinatra application you will need a working installation of Ruby and Rubygems. First make sure you have all the required gems installed:
 
-    $ bundle install
+    $ gem install sinatra addressable rack-flash bitly
 
 Then simply run the Ruby file:
 
     $ ruby tagger.rb
+
+...or refer to your host’s documentation on how to run Sinatra apps on your server.
 
 ## How it works
 
