@@ -1,4 +1,4 @@
-# Tagger
+# Tagger 0.1.0
 
 A very simple Sinatra application that lets you tag URLs with Google Analytics campaign information. It is not unlike Google's own tool, but this one comes with some commonly used tagging templates.
 
@@ -22,6 +22,10 @@ This app has a simple form that posts tags to a callback function, that merges t
 
 * Proper handling of bad or empty input
 * Handle all possible variables (keywords and content are unsupported)
+
+## History
+
+0.1.0 First release
 
 ## Credits
 
