@@ -16,6 +16,11 @@ Then simply run the Ruby file:
 
 This app has a simple form that posts tags to a callback function, that merges them back into a given URL. It returns your tagged URL (which will be ugly) and a shortened version of it (which will be slightly less ugly).
 
+## To Do
+
+* Proper handling of bad or empty input
+* Handle all possible variables (keywords and content are unsupported)
+
 ## Credits
 
 Author: Arjan van der Gaag <arjan@arjanvandergaag.nl>
