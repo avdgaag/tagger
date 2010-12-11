@@ -26,17 +26,26 @@ def input_vars(params)
   end
 end
 
+def assert_sensible_input(url, p)
+  raise 'Please provide a URL.' if url =~ /^\s*$/
+  %w[utm_source utm_medium utm_campaign].each do |var|
+    raise "Please provide a value for #{var.sub(/^utm_/, '')}" unless p.has_key?(var) && p[var] =~ /\S/
+  end
+end
+
 get '/' do
   erb :index
 end
 
 before '/tag' do
   @bitly = Bitly.new(CONFIG['bitly']['username'], CONFIG['bitly']['api_key'])
+  @input = input_vars(params)
 end
 
 post '/tag' do
   begin
     url = Addressable::URI.parse(params[:url]).tap { |u| u.query_values = (u.query_values || {}).merge(input_vars(params)) }
+    assert_sensible_input(params[:url], @input)
     flash[:notice]   = "Your tagged URL is %s (or use the shortened version: %s)" % [url.to_s, @bitly.shorten(url.to_s).short_url]
   rescue => e
     flash[:warning]  = e.message
