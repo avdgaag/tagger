@@ -6,3 +6,4 @@ Icon?
 .Trashes
 .*.sw[a-z]
 *.un~
+config.yaml
