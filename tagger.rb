@@ -46,7 +46,7 @@ post '/tag' do
   begin
     assert_sensible_input(params[:url], @input)
     url = Addressable::URI.parse(params[:url]).tap { |u| u.query_values = (u.query_values || {}).merge(@input) }
-    flash[:notice]   = "Your tagged URL is %s (or use the shortened version: %s)" % [url.to_s, @bitly.shorten(url.to_s).short_url]
+    flash[:notice]   = 'Your tagged URL is: <br><a href="%1$s">%1$s</a><br>(or use the shortened version: <a href="%2$s">%2$s</a>)' % [url.to_s, @bitly.shorten(url.to_s).short_url]
   rescue => e
     flash[:warning]  = e.message
   end
