@@ -369,22 +369,24 @@ __END__
                 option = document.createElement('option'),
                 leg    = f.getElementsByTagName('legend')[0],
                 label  = leg.getElementsByTagName('label')[0].lastChild.nodeValue.replace(/^ /, ''),
+                value  = leg.getElementsByTagName('input')[0].getAttribute('value'),
                 list   = f.getElementsByTagName('ol')[0];
-            dict[label] = list;
+            dict[value] = list;
             option.appendChild(document.createTextNode(label));
-            option.setAttribute('value', label);
+            option.setAttribute('value', value);
             list.style.display = 'none';
             select.appendChild(option);
             fieldset.appendChild(list);
             f.parentNode.removeChild(f);
         }
         list.style.display = 'block';
-        select.value = label;
+        select.value = value;
+        select.setAttribute('name', 'type');
         select.addEventListener('change', function(e) {
             for(l in dict) if(dict.hasOwnProperty(l)) dict[l].style.display = 'none';
             dict[this.value].style.display = 'block';
         });
-        legend.appendChild(document.createTextNode('Pick a template: '))
+        legend.appendChild(document.createTextNode('Pick a template: '));
         legend.appendChild(select);
         fieldset.insertBefore(legend, fieldset.firstChild);
         fragment.appendChild(fieldset);
