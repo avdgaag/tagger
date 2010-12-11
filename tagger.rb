@@ -4,6 +4,9 @@ require 'addressable/uri'
 require 'rack-flash'
 require 'bitly'
 
+Bitly.use_api_version_3
+CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), 'config.yaml'))
+
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
@@ -23,14 +26,27 @@ def input_vars(params)
   end
 end
 
+def assert_sensible_input(url, p)
+  raise 'Please provide a URL.' if url =~ /^\s*$/
+  %w[utm_source utm_medium utm_campaign].each do |var|
+    raise "Please provide a value for #{var.sub(/^utm_/, '')}" unless p.has_key?(var) && p[var] =~ /\S/
+  end
+end
+
 get '/' do
   erb :index
 end
 
+before '/tag' do
+  @bitly = Bitly.new(CONFIG['bitly']['username'], CONFIG['bitly']['api_key'])
+  @input = input_vars(params)
+end
+
 post '/tag' do
   begin
-    url = Addressable::URI.parse(params[:url]).tap { |u| u.query_values = (u.query_values || {}).merge(input_vars(params)) }
-    flash[:notice]   = "Your tagged URL is %s (or use the shortened version: %s)" % [url.to_s, Bitly.new('avdgaag', 'xxx').shorten(url.to_s).short_url]
+    assert_sensible_input(params[:url], @input)
+    url = Addressable::URI.parse(params[:url]).tap { |u| u.query_values = (u.query_values || {}).merge(@input) }
+    flash[:notice]   = 'Your tagged URL is: <br><a href="%1$s">%1$s</a><br>(or use the shortened version: <a href="%2$s">%2$s</a>)' % [url.to_s, @bitly.shorten(url.to_s).short_url]
   rescue => e
     flash[:warning]  = e.message
   end
@@ -362,22 +378,24 @@ __END__
                 option = document.createElement('option'),
                 leg    = f.getElementsByTagName('legend')[0],
                 label  = leg.getElementsByTagName('label')[0].lastChild.nodeValue.replace(/^ /, ''),
+                value  = leg.getElementsByTagName('input')[0].getAttribute('value'),
                 list   = f.getElementsByTagName('ol')[0];
-            dict[label] = list;
+            dict[value] = list;
             option.appendChild(document.createTextNode(label));
-            option.setAttribute('value', label);
+            option.setAttribute('value', value);
             list.style.display = 'none';
             select.appendChild(option);
             fieldset.appendChild(list);
             f.parentNode.removeChild(f);
         }
         list.style.display = 'block';
-        select.value = label;
+        select.value = value;
+        select.setAttribute('name', 'type');
         select.addEventListener('change', function(e) {
             for(l in dict) if(dict.hasOwnProperty(l)) dict[l].style.display = 'none';
             dict[this.value].style.display = 'block';
         });
-        legend.appendChild(document.createTextNode('Pick a template: '))
+        legend.appendChild(document.createTextNode('Pick a template: '));
         legend.appendChild(select);
         fieldset.insertBefore(legend, fieldset.firstChild);
         fragment.appendChild(fieldset);
