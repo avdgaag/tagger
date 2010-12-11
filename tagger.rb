@@ -4,6 +4,7 @@ require 'addressable/uri'
 require 'rack-flash'
 require 'bitly'
 
+Bitly.use_api_version_3
 CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), 'config.yaml'))
 
 helpers do
@@ -29,10 +30,14 @@ get '/' do
   erb :index
 end
 
+before '/tag' do
+  @bitly = Bitly.new(CONFIG['bitly']['username'], CONFIG['bitly']['api_key'])
+end
+
 post '/tag' do
   begin
     url = Addressable::URI.parse(params[:url]).tap { |u| u.query_values = (u.query_values || {}).merge(input_vars(params)) }
-    flash[:notice]   = "Your tagged URL is %s (or use the shortened version: %s)" % [url.to_s, Bitly.new(CONFIG['bitly']['username'], CONFIG['bitly']['api_key']).shorten(url.to_s).short_url]
+    flash[:notice]   = "Your tagged URL is %s (or use the shortened version: %s)" % [url.to_s, @bitly.shorten(url.to_s).short_url]
   rescue => e
     flash[:warning]  = e.message
   end
