@@ -4,6 +4,8 @@ require 'addressable/uri'
 require 'rack-flash'
 require 'bitly'
 
+CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), 'config.yaml'))
+
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
