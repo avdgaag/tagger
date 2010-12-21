@@ -278,7 +278,7 @@ __END__
     <% if flash.has?(:notice) %>
       <div id="flash" class="notice"><%= flash[:notice] %></div>
     <% end %>
-    <h1>tag–a–link</h1>
+    <h1>Link tagger</h1>
     <p>Enter a <abbr title="Uniform Resource Locator">URL</abbr> below and tag it for tracking in <a href="http://www.google.com/analytics/" rel="external">Google Analytics</a> — either by choosing a template or entering custom values. Press “Tag this link” and we’ll give you a <strong>tagged</strong> <em>and</em> a <strong>shortened</strong> <abbr>URL</abbr>.</p>
     <form action="/tag" method="post">
       <fieldset>
@@ -291,7 +291,7 @@ __END__
         </ol>
       </fieldset>
       <fieldset>
-        <legend><label><input type="radio" name="type" value="custom" checked> Custom Tags</label></legend>
+        <legend><label><input type="radio" name="type" value="custom" checked> Enter Custom Tags</label></legend>
         <ol>
           <li>
             <label for="form_utm_source">Source:</label>
@@ -349,10 +349,10 @@ __END__
         </ol>
       </fieldset>
       <fieldset>
-        <legend><label><input type="radio" name="type" value="newsletter"> Newsletter</label></legend>
+        <legend><label><input type="radio" name="type" value="newsletter"> An E-mail Newsletter</label></legend>
         <ol>
           <li>
-            <label for="form_newsletter_title">Title:</label>
+            <label for="form_newsletter_title">Newsletter title:</label>
             <input type="hidden" name="newsletter_utm_source" value="email">
             <input type="hidden" name="newsletter_utm_medium" value="newsletter">
             <input type="text" id="form_newsletter_title" name="newsletter_utm_campaign" value="" placeholder="Newsletter title">
